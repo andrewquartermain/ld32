@@ -16,14 +16,15 @@ public abstract class DefaultScreen implements Screen {
 
 	@Override
 	public void render(float delta) {
+		delta = Math.min(delta, 0.1f);
 		update(delta);
-		draw(batch);
+		draw(batch, delta);
 	}
 	
 	
 	public abstract void update(float delta);
 	
-	public abstract void draw(SpriteBatch batch);
+	public abstract void draw(SpriteBatch batch, float delta);
 	
 
 	@Override

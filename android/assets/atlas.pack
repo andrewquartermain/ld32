@@ -1,0 +1,173 @@
+
+atlas.png
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+balloon
+  rotate: false
+  xy: 1, 249
+  size: 256, 256
+  orig: 256, 256
+  offset: 0, 0
+  index: -1
+running
+  rotate: false
+  xy: 1, 67
+  size: 133, 180
+  orig: 133, 180
+  offset: 0, 0
+  index: 1
+running
+  rotate: false
+  xy: 259, 325
+  size: 133, 180
+  orig: 133, 180
+  offset: 0, 0
+  index: 2
+running
+  rotate: false
+  xy: 394, 325
+  size: 133, 180
+  orig: 133, 180
+  offset: 0, 0
+  index: 3
+running
+  rotate: false
+  xy: 529, 325
+  size: 133, 180
+  orig: 133, 180
+  offset: 0, 0
+  index: 4
+walking
+  rotate: false
+  xy: 136, 97
+  size: 94, 150
+  orig: 94, 150
+  offset: 0, 0
+  index: 1
+walking
+  rotate: false
+  xy: 664, 355
+  size: 94, 150
+  orig: 94, 150
+  offset: 0, 0
+  index: 2
+walking
+  rotate: false
+  xy: 760, 355
+  size: 94, 150
+  orig: 94, 150
+  offset: 0, 0
+  index: 3
+walking
+  rotate: false
+  xy: 856, 355
+  size: 94, 150
+  orig: 94, 150
+  offset: 0, 0
+  index: 4
+standing
+  rotate: false
+  xy: 952, 354
+  size: 54, 151
+  orig: 54, 151
+  offset: 0, 0
+  index: 1
+dead
+  rotate: false
+  xy: 259, 286
+  size: 151, 37
+  orig: 151, 37
+  offset: 0, 0
+  index: -1
+standing
+  rotate: false
+  xy: 232, 96
+  size: 54, 151
+  orig: 54, 151
+  offset: 0, 0
+  index: 2
+bomb
+  rotate: false
+  xy: 1, 1
+  size: 64, 64
+  orig: 64, 64
+  offset: 0, 0
+  index: -1
+heart
+  rotate: false
+  xy: 67, 1
+  size: 64, 64
+  orig: 64, 64
+  offset: 0, 0
+  index: 0
+heart
+  rotate: false
+  xy: 412, 259
+  size: 64, 64
+  orig: 64, 64
+  offset: 0, 0
+  index: 1
+heart
+  rotate: false
+  xy: 478, 259
+  size: 64, 64
+  orig: 64, 64
+  offset: 0, 0
+  index: 10
+heart
+  rotate: false
+  xy: 544, 259
+  size: 64, 64
+  orig: 64, 64
+  offset: 0, 0
+  index: 2
+heart
+  rotate: false
+  xy: 610, 259
+  size: 64, 64
+  orig: 64, 64
+  offset: 0, 0
+  index: 3
+heart
+  rotate: false
+  xy: 676, 289
+  size: 64, 64
+  orig: 64, 64
+  offset: 0, 0
+  index: 4
+heart
+  rotate: false
+  xy: 742, 289
+  size: 64, 64
+  orig: 64, 64
+  offset: 0, 0
+  index: 5
+heart
+  rotate: false
+  xy: 808, 289
+  size: 64, 64
+  orig: 64, 64
+  offset: 0, 0
+  index: 6
+heart
+  rotate: false
+  xy: 874, 289
+  size: 64, 64
+  orig: 64, 64
+  offset: 0, 0
+  index: 7
+heart
+  rotate: false
+  xy: 940, 288
+  size: 64, 64
+  orig: 64, 64
+  offset: 0, 0
+  index: 8
+heart
+  rotate: false
+  xy: 136, 31
+  size: 64, 64
+  orig: 64, 64
+  offset: 0, 0
+  index: 9

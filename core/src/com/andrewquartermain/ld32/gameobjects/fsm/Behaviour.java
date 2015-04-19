@@ -1,6 +1,8 @@
 package com.andrewquartermain.ld32.gameobjects.fsm;
 
+import com.andrewquartermain.ld32.Assets;
 import com.andrewquartermain.ld32.gameobjects.Person;
+import com.badlogic.gdx.math.MathUtils;
 
 public enum Behaviour implements FSM {
 	
@@ -8,9 +10,11 @@ public enum Behaviour implements FSM {
 
 		@Override
 		public void update(Person person, float delta) {
-			if (person.getStateTime() > 1) {
+			float stateTime = person.getStateTime();
+			if (stateTime > 1) {
 				person.setBehaviour(NONE);
 			}
+			person.setRegion(Assets.walking.getKeyFrame(stateTime));
 		}
 
 		@Override
@@ -35,9 +39,11 @@ public enum Behaviour implements FSM {
 
 		@Override
 		public void update(Person person, float delta) {
-			if (person.getStateTime() > 3) {
+			float stateTime = person.getStateTime();
+			if (stateTime > 3) {
 				person.setBehaviour(NONE);
 			}
+			person.setRegion(Assets.running.getKeyFrame(stateTime));
 
 		}
 
@@ -72,6 +78,8 @@ public enum Behaviour implements FSM {
 		@Override
 		public void enter(Person person) {
 			person.setVelocity(0);
+			person.setRegion(Assets.standing.get(MathUtils.random(1)));
+			person.chat();
 		}
 
 		@Override
@@ -91,15 +99,13 @@ public enum Behaviour implements FSM {
 		@Override
 		public void update(Person person, float delta) {
 			
-			if (person.getStateTime() > 10) {
-				person.remove();
-			}
 
 		}
 
 		@Override
 		public void enter(Person person) {
 			person.setDead();
+			person.setRegion(Assets.dead);
 
 		}
 
@@ -126,6 +132,8 @@ public enum Behaviour implements FSM {
 					person.setInteraction(contact);
 				}
 			}
+			person.setRegion(Assets.walking.getKeyFrame(person.getStateTime()));
+
 			
 		}
 

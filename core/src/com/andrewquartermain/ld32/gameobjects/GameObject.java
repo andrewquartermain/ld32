@@ -1,5 +1,6 @@
 package com.andrewquartermain.ld32.gameobjects;
 
+import com.andrewquartermain.ld32.LD32;
 import com.andrewquartermain.ld32.screen.GameScreen;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -9,15 +10,15 @@ import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 public abstract class GameObject implements Looped {
 
 	private TextureRegion region;
-	protected float x, y, width, height;
+	protected float x, y, width, height, tWidth, tHeight;
 	protected GameScreen screen;
-
+	protected boolean flip;
 	protected Color color;
 
 	public GameObject(GameScreen screen, TextureRegion region, float x,
 			float y, float width, float height) {
 		super();
-		this.region = region;
+		setRegion(region);
 		this.x = x;
 		this.y = y;
 		this.width = width;
@@ -31,7 +32,9 @@ public abstract class GameObject implements Looped {
 	public void draw(SpriteBatch batch) {
 
 		if (region != null)
-			batch.draw(region, x, y);
+			batch.draw(region, flip ? x * LD32.PPU + tWidth : x * LD32.PPU, y
+					* LD32.PPU, flip ? -tWidth : tWidth,
+					tHeight);
 	}
 
 	public void drawDebug(ShapeRenderer rend) {
@@ -63,6 +66,12 @@ public abstract class GameObject implements Looped {
 		return region;
 	}
 
+	public void setRegion(TextureRegion region) {
+		this.region = region;
+		tWidth = region.getRegionWidth();
+		tHeight = region.getRegionHeight();
+	}
+
 	public float getX() {
 		return x;
 	}
@@ -82,5 +91,18 @@ public abstract class GameObject implements Looped {
 	public GameScreen getScreen() {
 		return screen;
 	}
+	
+	public void superReset(float x,
+			float y, float width, float height) {
+		this.x = x;
+		this.y = y;
+		this.width = width;
+		this.height = height;
+		color.set(1, 1, 1, 1);
+		reset(x,y,width,height);
+	}
+	
+	public abstract void reset(float x,
+			float y, float width, float height);
 
 }

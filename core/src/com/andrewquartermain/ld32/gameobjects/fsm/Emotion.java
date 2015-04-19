@@ -1,5 +1,6 @@
 package com.andrewquartermain.ld32.gameobjects.fsm;
 
+import com.andrewquartermain.ld32.Assets;
 import com.andrewquartermain.ld32.gameobjects.Person;
 
 public enum Emotion implements FSM {
@@ -14,7 +15,8 @@ public enum Emotion implements FSM {
 
 		@Override
 		public void enter(Person person) {
-			person.setColor(0.3f, 0, 0, 1);
+			person.setColor(0, 0, 0, 0.5f);
+			person.setHeart(Assets.getHeart(false));
 
 		}
 
@@ -36,7 +38,9 @@ public enum Emotion implements FSM {
 
 		@Override
 		public void enter(Person person) {
-			person.setColor(0.3f, 0.5f, 0.5f, 1);
+			person.setColor(0.5f, 0.5f, 0.5f, 0.5f);
+			person.setHeart(Assets.getHeart(false));
+
 		}
 
 		@Override
@@ -57,7 +61,9 @@ public enum Emotion implements FSM {
 
 		@Override
 		public void enter(Person person) {
-			person.setColor(1, 1, 1, 1);
+			person.setColor(1, 1, 1, 0.5f);
+			person.setHeart(Assets.getHeart(false));
+
 
 
 		}
@@ -80,7 +86,9 @@ public enum Emotion implements FSM {
 
 		@Override
 		public void enter(Person person) {
-			person.setColor(1, 1, 0, 1);
+			person.setColor(1, 1, 1, 0.5f);
+			person.setHeart(Assets.getHeart(true));
+
 
 
 		}
@@ -103,7 +111,9 @@ public enum Emotion implements FSM {
 
 		@Override
 		public void enter(Person person) {
-			person.setColor(1, 0.3f, 0.5f, 1);
+			person.setColor(1, 1, 1, 1);
+			person.setHeart(Assets.getHeart(true));
+
 
 
 		}
@@ -128,6 +138,8 @@ public enum Emotion implements FSM {
 		public void enter(Person person) {
 			person.setColor(0, 0, 0, 1);
 			person.setBehaviour(Behaviour.DEAD);
+			person.setHeart(Assets.getHeart(true));
+			
 
 		}
 
@@ -149,5 +161,7 @@ public enum Emotion implements FSM {
 		person.setLoveLevel(spread);
 		person.setEmotion();
 	}
+	
+	
 
 }

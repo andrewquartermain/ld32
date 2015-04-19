@@ -1,5 +1,6 @@
 package com.andrewquartermain.ld32.gameobjects;
 
+import com.andrewquartermain.ld32.Assets;
 import com.andrewquartermain.ld32.LD32;
 import com.andrewquartermain.ld32.input.KeyboardInput;
 import com.andrewquartermain.ld32.screen.GameScreen;
@@ -9,14 +10,17 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 
 public class Player extends GameObject {
 
-	private static final float YACC = 0.15f, XACC = 0.15f, MAX_VEL_X = 10, MAX_VEL_Y = 3, DAMP = 0.99f, BOMB_DELAY = 3;
+	private static final float YACC = 0.15f, XACC = 0.15f, MAX_VEL_X = 10, MAX_VEL_Y = 3, DAMP = 0.99f, BOMB_DELAY = 1;
 
 	private float velX, velY, accX, accY, bombTime;
 	private boolean up, down, left, right, bombDropped;
 
 	public Player(GameScreen screen, TextureRegion region, float x, float y, float width,
 			float height) {
-		super(screen, region, x, y, width, height);
+		super(screen, Assets.balloon, x, y, width, height);
+		
+		setRegion(Assets.balloon);
+		
 		
 		Gdx.input.setInputProcessor(new KeyboardInput(this, new int[] {
 			Keys.UP, Keys.DOWN, Keys.LEFT, Keys.RIGHT, Keys.Z, Keys.X, Keys.R	
@@ -63,7 +67,7 @@ public class Player extends GameObject {
 			velX = Math.signum(velX) * MAX_VEL_X;
 		}
 		velX *= delta;
-		if ((x + velX) < 0 || (x + width + velX) > GameScreen.LEVEL_WIDTH) {
+		if ((x + velX) < 1 || (x + width + velX) > GameScreen.LEVEL_WIDTH - 4) {
 			velX = 0;
 		} else {
 			x += velX;
@@ -78,7 +82,7 @@ public class Player extends GameObject {
 			velY = Math.signum(velY) * MAX_VEL_Y;
 		}
 		velY *= delta;
-		if ((y + velY) < 5 || (y + velY) > LD32.HEIGHT - 1) {
+		if ((y + velY) < 5 || (y + velY) > LD32.HEIGHT - 5) {
 			velY = 0;
 		} else {
 			y += velY;
@@ -88,7 +92,7 @@ public class Player extends GameObject {
 
 	public void bomb() {
 		if (bombDropped) return;
-		Bomb bomb = new Bomb(screen, x + 0.125f, y);
+		Bomb bomb = new Bomb(screen, x + 2, y);
 		screen.addObject(bomb);
 		setBombDropped(true);
 	}
@@ -97,6 +101,7 @@ public class Player extends GameObject {
 	}
 
 	public void reset() {
+		screen.reset();
 	}
 
 	public void setUp(boolean up) {
@@ -120,6 +125,12 @@ public class Player extends GameObject {
 	private void setBombDropped(boolean b) {
 		bombDropped = b;
 		if(b) bombTime = BOMB_DELAY;
+		
+	}
+
+	@Override
+	public void reset(float x, float y, float width, float height) {
+		// TODO Auto-generated method stub
 		
 	}
 	

@@ -1,8 +1,11 @@
 package com.andrewquartermain.ld32.gameobjects;
 
+import com.andrewquartermain.ld32.Assets;
+import com.andrewquartermain.ld32.LD32;
 import com.andrewquartermain.ld32.gameobjects.fsm.Behaviour;
 import com.andrewquartermain.ld32.gameobjects.fsm.Emotion;
 import com.andrewquartermain.ld32.screen.GameScreen;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
@@ -19,18 +22,23 @@ public class Person extends GameObject {
 	private Array<Person> contacts;
 	private Array<Person> people;
 	private float stateTime;
+	private TextureRegion heart;
 
 	public Person(GameScreen screen, TextureRegion region, float x, float y,
 			float width, float height) {
-		super(screen, region, x, y, width, height);
+		super(screen, Assets.standing.get(0), x, y, width, height);
 		loveLevel = MathUtils.random(0.01f, 0.99f);
 		setEmotion();
 		setBehaviour(Behaviour.WANDER);
+		
+		setHeart(Assets.getHeart(false));
 
 		contacts = new Array<Person>();
 		people = screen.getPeople();
 		stateTime = 0;
 	}
+
+	
 
 	@Override
 	public void update(float delta) {
@@ -40,6 +48,7 @@ public class Person extends GameObject {
 		float xx = x + velocity;
 		if (xx < 0 || xx + width > GameScreen.LEVEL_WIDTH) {
 			velocity *= -1;
+			flip = !flip;
 		}
 		x += velocity;
 		velocity /= delta;
@@ -66,6 +75,7 @@ public class Person extends GameObject {
 		emotion.update(this, delta);
 		behaviour.update(this, delta);
 		contacts.clear();
+		setLoveLevel(-0.00001f);
 
 	}
 
@@ -106,7 +116,8 @@ public class Person extends GameObject {
 	}
 
 	public void setVelocity(float vel) {
-		velocity = (MathUtils.randomBoolean() ? vel : -vel);
+		flip = MathUtils.randomBoolean();
+		velocity = (flip ? -vel : vel);
 		velocity *= MathUtils.random(0.75f, 1.25f);
 	}
 
@@ -135,8 +146,15 @@ public class Person extends GameObject {
 	}
 
 	public void draw(SpriteBatch batch, BitmapFont font) {
-		font.draw(batch, Integer.toString((int) (loveLevel * 100)), x * 20,
-				(y + 2) * 20);
+		if (LD32.DEBUG) {
+			font.draw(batch, Integer.toString((int) (loveLevel * 100)), x
+					* LD32.PPU, (y) * LD32.PPU + tHeight);
+		}
+		if (heart != null) {
+			batch.setColor(color);
+			batch.draw(heart, ((x + 0.25f) * LD32.PPU), ((y) * LD32.PPU) + tHeight);
+			batch.setColor(Color.WHITE);
+		}
 
 	}
 
@@ -144,6 +162,10 @@ public class Person extends GameObject {
 		if (behaviour == Behaviour.DEAD)
 			return;
 		loveLevel += f;
+	}
+	
+	public float getLoveLevel() {
+		return loveLevel;
 	}
 
 	public float getStateTime() {
@@ -154,13 +176,12 @@ public class Person extends GameObject {
 		velocity = 0;
 		width = 1;
 		height = 0.5f;
+		screen.decPopulation();
+		loveLevel = 0;
 
 	}
 
-	public void remove() {
-		screen.removePerson(this);
-
-	}
+	
 
 	public Behaviour getBehaviour() {
 		return behaviour;
@@ -168,6 +189,36 @@ public class Person extends GameObject {
 
 	public void spreadEmotion(Person contact) {
 		emotion.spread(contact);
+		
+	}
+	
+	public void setHeart(TextureRegion heart) {
+		this.heart = heart;
+	}
+
+
+
+	public void chat() {
+		float volume, pan;
+		pan = (getX() - screen.getX()) / LD32.WIDTH;
+		volume = Math.abs(pan);
+		Assets.playSound(volume, pan);
+	}
+
+
+
+	@Override
+	public void reset(float x, float y, float width, float height) {
+		loveLevel = MathUtils.random(0.01f, 0.99f);
+		setEmotion();
+		behaviour = Behaviour.WANDER;
+		setBehaviour(Behaviour.WANDER);
+		
+		setHeart(Assets.getHeart(false));
+
+		contacts.clear();
+		people = screen.getPeople();
+		stateTime = 0;
 		
 	}
 
